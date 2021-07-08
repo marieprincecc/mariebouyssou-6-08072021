@@ -1,6 +1,9 @@
 const express = require("express")
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+
+const sauce = require('./models/sauce')
+const user = require('./models/utilisateur')
 
 const app = express()
 mongoose.connect('mongodb+srv://marie_user_01:MonMotDePass@cluster0-marie.j8kf4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
