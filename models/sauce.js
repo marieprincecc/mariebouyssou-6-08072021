@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose')        //importation mongoose
 
-const schemaSauce = mongoose.Schema({
+const schemaSauce = mongoose.Schema({       //modele sauce
     userId: {type: string, required: true}, // identifiant unique MongoDB pour l'utilisateur qui a créé la sauce ;
     name: {type: string, required: true}, // nom de la sauce ;
     manufacturer: {type: string, required: true}, //fabricant de la sauce ;
@@ -14,4 +14,4 @@ const schemaSauce = mongoose.Schema({
     usersDisliked: {type: [string], required: true}, // tableau d'identifiants d'utilisateurs n'ayant pas aiméla sauce.
 })
 
-module.exports = mongoose.model('sauce', schemaSauce);
+module.exports = mongoose.model('sauce', schemaSauce);      //exportation du modele
