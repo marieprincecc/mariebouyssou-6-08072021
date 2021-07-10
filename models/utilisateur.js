@@ -7,4 +7,4 @@ const schemaUtilisateur = mongoose.Schema({     //modele user
 
 })
 
-module.exports = mongoose.model('utilisateur', schemaUtilisateur);      //exportation modele
+module.exports = mongoose.model('user', schemaUtilisateur);      //exportation modele
