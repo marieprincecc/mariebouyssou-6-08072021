@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const user = require('../models/utilisateur')    //importation modele user
 
@@ -29,7 +30,9 @@ exports.logingUser = (req, res, next) => {   //authentification utilisateur !!!!
             }
             res.status(200).json({      //si mot de passe correct on renvoi la reponse attendu
               userId: User._id,
-              token: 'TOKEN'
+              token: jwt.sign({ userId: User._id },//methode signe pour encoder un nouveau token, userId comme payload
+                'RANDOM_TOKEN_SECRET',      //chaîne secrète de développement temporaire 
+                { expiresIn: '24h' })     //durée de validité du token
             });
           })
           .catch(error => res.status(500).json({ error }));
