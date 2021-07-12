@@ -1,6 +1,7 @@
 const express = require("express")    //importation express (facilite la gestion de server)
 const bodyParser = require('body-parser')   //importation body-parser (permet de gerer les demande avec json)
 const mongoose = require('mongoose')    //importation mongoose(permet la comunication avec mongoDB)
+const path = require('path');
 
 const saucesRoutes = ('./routes/sauces')
 const authRoutes = ('./routes/auth')
@@ -21,6 +22,7 @@ app.use((req, res, next) => {       //permet l'acces a tout utilisateur autorise
 
   app.use(bodyParser.json());     //converti toute les reponse en format utilisable (json)
 
+  app.use('/images', express.static(path.join(__dirname, 'images')));   //indique a express d'utiliser les ressources image en static
   app.use('/api/sauces',saucesRoutes);
   app.use('/api/auth',authRoutes);
 
