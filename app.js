@@ -32,4 +32,4 @@ app.use((req, res, next) => {       //permet l'acces a tout utilisateur autorise
   
 
 
-module.exports = app      //exportation de app (pour server.js)
+  module.exports = app      //exportation de app (pour server.js)

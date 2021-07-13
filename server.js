@@ -1,5 +1,5 @@
-const http = require('http');
-const app = require('./app');
+const http = require("http")
+const app = require("./app")
 
 const normalizePort = val => {      //renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne 
   const port = parseInt(val, 10);
@@ -35,7 +35,7 @@ const errorHandler = error => {         // recherche les différentes erreurs et
   }
 };
 
-const server = http.createServer(app);
+const server = http.createServer(app)
 
 server.on('error', errorHandler);
 server.on('listening', () => {
