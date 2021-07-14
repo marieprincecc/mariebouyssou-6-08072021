@@ -14,7 +14,7 @@ exports.getAllSauces =  (req, res, next) => {       // acces affichage toutes le
 };
 
 exports.createSauce = (req, res, next) => {   //enregistrement nouvelle sauce dans la base de données !!!! VERIFIER SCHEMA!!!
-  const sauceObject = JSON.parse(req.body.Sauce)  //on transforme pour avoir un object utilisable
+  const sauceObject = JSON.parse(req.body.sauce)  //on transforme pour avoir un object utilisable
   const Sauce = new sauce({
       ...sauceObject,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  //recuperation de l'url

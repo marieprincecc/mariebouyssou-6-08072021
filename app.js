@@ -1,8 +1,8 @@
 const express = require('express')    //importation express (facilite la gestion de server)
 const bodyParser = require('body-parser')   //importation body-parser (permet de gerer les demande avec json)
 const mongoose = require('mongoose')    //importation mongoose(permet la comunication avec mongoDB)
-const saucesRoutes = ('/routes/sauces')
-const authRoutes = ('/routes/auth')
+const saucesRoutes = require('./routes/sauces')
+const authRoutes = require('./routes/auth')
 
 const path = require('path')
 const app = express()   //const app utilisant express
