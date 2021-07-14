@@ -1,5 +1,5 @@
-const http = require("http")
-const app = require("./app")
+const http = require('http')
+const app = require('./app')
 
 const normalizePort = val => {      //renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne 
   const port = parseInt(val, 10);
