@@ -27,8 +27,8 @@ exports.createSauce = (req, res, next) => {   //enregistrement nouvelle sauce da
 exports.modifySauce =  (req, res, next) => {   //modification sauce
   const sauceObject = req.file ?
   {
-    ...JSON.parse(req.body.sauce),
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    ...req.body,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  //recuperation de l'url
   } : { ...req.body };
     sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
     .then(() => res.status(200).json({sauce}))
