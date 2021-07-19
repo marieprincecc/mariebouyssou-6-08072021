@@ -27,15 +27,34 @@ exports.createSauce = (req, res, next) => {   //enregistrement nouvelle sauce da
 };
 
 exports.modifySauce =  (req, res, next) => {   //modification sauce
-  const sauceObject = req.file ?
+  const sauceObject = req.file ?  
   {
-    ...req.body,
+    ...JSON.parse(req.body.sauce),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  //recuperation de l'url
-  } : { ...req.body };
-  sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
+  } : { ...req.body};
+ 
+  if(req.file){
+    console.log(sauceObject)
+    sauce.findOne({ _id: req.params.id })     //recuperation sauce avec id
+    .then(Sauce => {
+      
+      const filename1 = Sauce.imageUrl.split('/images/')[1];   //recuperation du nom du fichier image
+      
+      fs.unlink(`images/${filename1}`, () => {
+        
+        sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
+    
+    .then(() => res.status(200).json({message:'sauce modifiee'}))
+    .catch( error => res.status(400).json({error}))
+      })
+    })
+    .catch( error => res.status(500).json({error}))
+  }else{
+    sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
     
     .then(() => res.status(200).json({sauce}))
     .catch( error => res.status(400).json({error}))
+  }
 };
 
 exports.deleteSauce =  (req, res, next) => {   // suppression de sauce
@@ -58,8 +77,9 @@ exports.LikeDislike = (req, res, next) => {
   const userId = decodedToken.userId;
   const verificationLike = sauce.findOne({ _id: req.params.id },{'usersLiked': { '$elemMatch': { userId } }});
   const verificationDislike = sauce.findOne({ _id: req.params.id },{'usersDisliked': { '$elemMatch': { userId } }});
+ 
   if (!verificationLike || req.body.like==1 ) {
-    sauce.updateOne({ _id: req.params.id },{'$set':{'usersLiked':userId}})
+    sauce.updateOne({ _id: req.params.id },{'$set':{'usersLiked':userId},'$inc':{'likes':1}})
   .then(() => res.status(200).json({message:'like'}))
   .catch( error => res.status(400).json({error}));
   }
@@ -72,7 +92,7 @@ sauce.updateOne({ _id: req.params.id },{'$unset':{'usersLiked':userId}} )
 .catch( error => res.status(400).json({error}));
   }
 if (!verificationDislike || req.body.like==-1 ) {
-  sauce.updateOne({ _id: req.params.id },{'$set':{'usersDisliked':userId}})
+  sauce.updateOne({ _id: req.params.id },{'$set':{'usersDisliked':userId},'$inc':{'dislikes':1}})
 .then(() => res.status(200).json({message:'dislike'}))
 .catch( error => res.status(400).json({error}));
 }
