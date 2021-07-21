@@ -1,7 +1,7 @@
 const sauce = require('../models/sauce');   //importation modele sauce
 const fs = require('fs');
 const mongoose = require('mongoose')    //importation mongoose(permet la comunication avec mongoDB)
-const jwt = require('jsonwebtoken');
+
 
 exports.getOneSauce = (req, res, next) => {   //affichage d'une seule sauces
     sauce.findOne({ _id: req.params.id })
@@ -17,10 +17,11 @@ exports.getAllSauces =  (req, res, next) => {       // acces affichage toutes le
 
 exports.createSauce = (req, res, next) => {   //enregistrement nouvelle sauce dans la base de données !!!! VERIFIER SCHEMA!!!
   const sauceObject = JSON.parse(req.body.sauce)  //on transforme pour avoir un object utilisable
-  const Sauce = new sauce({
+    const Sauce = new sauce({
       ...sauceObject,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  //recuperation de l'url
     });
+    
     Sauce.save()
       .then(() => res.status(201).json({ message: 'Nouvelle sauce enregistrée !'}))
       .catch(error => res.status(400).json({ error }));
@@ -32,9 +33,8 @@ exports.modifySauce =  (req, res, next) => {   //modification sauce
     ...JSON.parse(req.body.sauce),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  //recuperation de l'url
   } : { ...req.body};
- 
   if(req.file){
-    console.log(sauceObject)
+    
     sauce.findOne({ _id: req.params.id })     //recuperation sauce avec id
     .then(Sauce => {
       
@@ -72,9 +72,7 @@ exports.deleteSauce =  (req, res, next) => {   // suppression de sauce
 };
 
 exports.LikeDislike = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1];          //on recupère le token dans les headers
-  const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');     //on decode le token
-  const userId = decodedToken.userId;                           //recuperation du userId
+  const userId = req.body.userId;                           //recuperation du userId
   
   sauce.findOne({ _id: req.params.id })                         //recuperation de la sauce
     .then(Sauce => {

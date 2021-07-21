@@ -1,6 +1,7 @@
 const express = require('express')    //importation express (facilite la gestion de server)
 const bodyParser = require('body-parser')   //importation body-parser (permet de gerer les demande avec json)
 const mongoose = require('mongoose')    //importation mongoose(permet la comunication avec mongoDB)
+const helmet = require('helmet')
 const saucesRoutes = require('./routes/sauces')
 const authRoutes = require('./routes/auth')
 
@@ -21,6 +22,10 @@ app.use((req, res, next) => {       //permet l'acces a tout utilisateur autorise
   });
 
   app.use(bodyParser.json());     //converti toute les reponse en format utilisable (json)
+  app.use(helmet());            //inclu directement helmet a l'app
+  app.use(helmet.xssFilter());   //inclu l’en-tête X-XSS-Protection
+  app.use(helmet.noSniff());    // empêche le navigateur de deviner le type du fichier (empeche par exemple attaque GIFAR)
+  app.use(helmet.frameguard({ action: 'deny' })); //interdit l'ouverture d'une page légitime à l’intérieur d’une iframe
 
   app.use('/images', express.static(path.join(__dirname, 'images')));   //indique a express d'utiliser les ressources image en static
   app.use('/api/sauces',saucesRoutes);
