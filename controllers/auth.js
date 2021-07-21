@@ -40,7 +40,7 @@ exports.logingUser = (req, res, next) => {   //authentification utilisateur !!!!
               userId: User._id,
               token: jwt.sign({ userId: User._id },//methode signe pour encoder un nouveau token, userId 
                 'RANDOM_TOKEN_SECRET',      //chaîne secrète de développement temporaire 
-                { expiresIn: '24h' })     //durée de validité du token
+                { expiresIn: '10h' })     //durée de validité du token
             });
           })
           .catch(error => res.status(500).json({ error }));
