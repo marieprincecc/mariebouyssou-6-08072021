@@ -2,6 +2,7 @@ const sauce = require('../models/sauce');   //importation modele sauce
 const fs = require('fs');
 const mongoose = require('mongoose')    //importation mongoose(permet la comunication avec mongoDB)
 
+ 
 
 exports.getOneSauce = (req, res, next) => {   //affichage d'une seule sauces
     sauce.findOne({ _id: req.params.id })
@@ -16,7 +17,7 @@ exports.getAllSauces =  (req, res, next) => {       // acces affichage toutes le
 };
 
 exports.createSauce = (req, res, next) => {   //enregistrement nouvelle sauce dans la base de données !!!! VERIFIER SCHEMA!!!
-  const sauceObject = JSON.parse(req.body.sauce)  //on transforme pour avoir un object utilisable
+    const sauceObject = JSON.parse(req.body.sauce)  //on transforme pour avoir un object utilisable
     const Sauce = new sauce({
       ...sauceObject,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  //recuperation de l'url
@@ -43,7 +44,8 @@ exports.modifySauce =  (req, res, next) => {   //modification sauce
       fs.unlink(`images/${filename1}`, () => {
         
         sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
-    
+       
+        
     .then(() => res.status(200).json({message:'sauce modifiee'}))
     .catch( error => res.status(400).json({error}))
       })
