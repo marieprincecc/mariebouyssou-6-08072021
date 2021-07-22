@@ -14,6 +14,8 @@ mongoose.connect('mongodb+srv://marie_user_01:MonMotDePass@cluster0-marie.j8kf4.
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+mongoose.set('runValidators', true);
+
 app.use((req, res, next) => {       //permet l'acces a tout utilisateur autorise les header au requete et defini les requete possible
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
