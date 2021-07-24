@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const user = require('../models/utilisateur');    //importation modele user
+const tokenKey = require('../environement/dev')
 
 exports.createUser = (req, res, next) => {   //creation nouvel utilisateur
 
@@ -32,7 +33,7 @@ exports.logingUser = (req, res, next) => {   //authentification utilisateur !!!!
             res.status(200).json({      //si mot de passe correct on renvoi la reponse attendu
               userId: User._id,
               token: jwt.sign({ userId: User._id },//methode signe pour encoder un nouveau token, userId 
-                'RANDOM_TOKEN_SECRET',      //chaîne secrète de développement temporaire 
+                tokenKey,      //chaîne secrète de développement temporaire 
                 { expiresIn: '10h' })     //durée de validité du token
             });
           })

@@ -4,17 +4,17 @@ const mongoose = require('mongoose')    //importation mongoose(permet la comunic
 const helmet = require('helmet')
 const saucesRoutes = require('./routes/sauces')
 const authRoutes = require('./routes/auth')
+const baseDeDonnée = require('./environement/dev')
+
 
 const path = require('path')
 const app = express()   //const app utilisant express
 
-mongoose.connect('mongodb+srv://marie_user_01:MonMotDePass@cluster0-marie.j8kf4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-  { useNewUrlParser: true,        //conection a mongoDB penser a modifier <password> par le mot de passe renvoi une promesse donc then et catch
-    useUnifiedTopology: true })
+mongoose.connect(baseDeDonnée, { useNewUrlParser: true, useUnifiedTopology: true })      //conection a mongoDB penser a modifier <password> par le mot de passe renvoi une promesse donc then et catch
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-mongoose.set('runValidators', true);
+
 
 app.use((req, res, next) => {       //permet l'acces a tout utilisateur autorise les header au requete et defini les requete possible
     res.setHeader('Access-Control-Allow-Origin', '*');

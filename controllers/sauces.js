@@ -36,14 +36,14 @@ exports.modifySauce =  (req, res, next) => {   //modification sauce
       .then(Sauce => {
         const filename1 = Sauce.imageUrl.split('/images/')[1];   //recuperation du nom du fichier image
         fs.unlink(`images/${filename1}`, () => {
-          sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id},{runValidators: true})
+          sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
             .then(() => res.status(200).json({message:'sauce modifiee'}))
             .catch( error => res.status(400).json({error}))
       })
     })
       .catch( error => res.status(500).json({error}))
   }else{
-    sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id},{runValidators: true})
+    sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id})
     
       .then(() => res.status(200).json({sauce}))
       .catch( error => res.status(400).json({error}))

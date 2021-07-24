@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')        //importation mongoose
 
-const regex = /[^=\]\[\}\{<>$]/ 
+const regex = /^([A-Za-z0-9.])*$/ 
 
 const schemaSauce = mongoose.Schema({       //modele sauce
     userId: {type: String, required: true}, // identifiant unique MongoDB pour l'utilisateur qui a créé la sauce 
