@@ -1,14 +1,21 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const user = require('../models/utilisateur');    //importation modele user
-const tokenKey = require('../environement/dev')
+const secretKey = require('../environement/keys');
+const tokenKey = require('../environement/token')
+const cryptoJs = require('crypto-js');
+
+const regexMail = /^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$/ 
+const regexPassword = /^[a-zA-Z0-9]+[^\s'$=]{8,20}$/
 
 exports.createUser = (req, res, next) => {   //creation nouvel utilisateur
-
+  if(regexMail.test(req.body.email)&&regexPassword.test(req.body.password)){
+  const mail = cryptoJs.AES.encrypt(req.body.email, secretKey).toString();
    bcrypt.hash(req.body.password, 10)        //hashage du mot de passe
    .then(hash => {
+
      const User = new user({                 // creation new user avec hash du mdp
-      email: req.body.email,
+      email: mail,
       password: hash
     });
     User.save()                           //enregistrement nouvel utilisateur dans la base de données
@@ -16,11 +23,13 @@ exports.createUser = (req, res, next) => {   //creation nouvel utilisateur
     .catch(error => res.status(400).json({ error }));
   })
   .catch(error => res.status(500).json({ error }));
+}else{console.log('non conforme')}
 };
 
 
 exports.logingUser = (req, res, next) => {   //authentification utilisateur !!!! A COMPLETER
-      user.findOne({ email: req.body.email })   // on cherche l'utilisateur correspondant a l'email de la requet
+  const mail = cryptoJs.AES.encrypt(req.body.email, secretKey).toString();
+      user.findOne( {mail : user.email} )   // on cherche l'utilisateur correspondant a l'email de la requet
       .then(User => {
         if (!User) {      //si non trouvé
           return res.status(401).json({ error: 'Utilisateur non trouvé !' });

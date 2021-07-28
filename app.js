@@ -4,15 +4,15 @@ const mongoose = require('mongoose')    //importation mongoose(permet la comunic
 const helmet = require('helmet')
 const saucesRoutes = require('./routes/sauces')
 const authRoutes = require('./routes/auth')
-const baseDeDonnée = require('./environement/dev')
-
+const baseDeDonnée = require('./environement/bdd')
 
 const path = require('path')
 const app = express()   //const app utilisant express
 
-mongoose.connect(baseDeDonnée, { useNewUrlParser: true, useUnifiedTopology: true })      //conection a mongoDB penser a modifier <password> par le mot de passe renvoi une promesse donc then et catch
+mongoose.connect('mongodb+srv://marie_user_01:MonMotDePass@cluster0-marie.j8kf4.mongodb.net/piquante?retryWrites=true&w=majority',
+ { useNewUrlParser: true, useUnifiedTopology: true })      //conection a mongoDB penser a modifier <password> par le mot de passe renvoi une promesse donc then et catch
   .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  .catch(() => console.log('Connexion à MongoDb a échouée!'));
 
 
 
