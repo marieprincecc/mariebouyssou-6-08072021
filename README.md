@@ -2,9 +2,10 @@
 
 #Piquante#
 
+Dans le repertoire "backend" lancé la commande `npm install`.
 Démarrer nodemon pour lancer le serveur (`localhost` port `3000` par defaut). Rechargera automatiquement en cas de modification.
 
-Utilisé une base de donnée MongoDb, créer un dossier "environement" dans le dossier "backend". Dans le dossier "environement" créer deux fichiers: "bdd.js" et "keys.js"
+Utilisé une base de donnée MongoDb, toujours dans le dossier "backend" créer un dossier "environement" . Dans le dossier "environement" créer deux fichiers: "bdd.js" et "keys.js"
 
  #modèle du fichier "bdd.js"#
 
