@@ -6,18 +6,10 @@ const uniqueValidator = require('mongoose-unique-validator');   //pour les entr�
 
 const schemaUtilisateur = mongoose.Schema({     //modele user
   
-    email: {                                            //adresse électronique de l'utilisateur 
-        type: String, 
-        required: true, 
-        unique:true
-          },
-            
-    password: {                                                 //mot de passe de l'utilisateur
-        type: String,
-        required: true,
-    } 
-
+    email: {type: String, required: true, unique:true},          //adresse électronique de l'utilisateur    
+    password: {   type: String, required: true}                  //mot de passe de l'utilisateur
+ 
 })
 
-schemaUtilisateur.plugin(uniqueValidator); //application du plugin
+schemaUtilisateur.plugin(uniqueValidator);                          //application du plugin
 module.exports = mongoose.model('user', schemaUtilisateur);      //exportation modele

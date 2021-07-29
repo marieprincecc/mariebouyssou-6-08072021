@@ -1,25 +1,25 @@
 const express = require('express')    //importation express (facilite la gestion de server)
 const bodyParser = require('body-parser')   //importation body-parser (permet de gerer les demande avec json)
 const mongoose = require('mongoose')    //importation mongoose(permet la comunication avec mongoDB)
-const helmet = require('helmet')
+const helmet = require('helmet')        //importation helmet securité
 const saucesRoutes = require('./routes/sauces')
 const authRoutes = require('./routes/auth')
-const base = require('./environement/bdd');
+const base = require('./environement/bdd'); //importation variables bdd
 const name = base.name;
 const mdp = base.mdp;
 const cluster = base.cluster;
 const bdd = base.bdd;
 const path = require('path')
-const app = express()   //const app utilisant express
+const app = express()                           //const app utilisant express
 
+//connection a la base de donnée
 mongoose.connect('mongodb+srv://' + name + ':'+ mdp +'@'+cluster+'.j8kf4.mongodb.net/'+bdd+'?retryWrites=true&w=majority',
  { useNewUrlParser: true, useUnifiedTopology: true })      //conection a mongoDB penser a modifier <password> par le mot de passe renvoi une promesse donc then et catch
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDb a échouée!'));
 
-
-
-app.use((req, res, next) => {       //permet l'acces a tout utilisateur autorise les header au requete et defini les requete possible
+ //permet l'acces a tout utilisateur autorise les header au requete et defini les requete possible
+app.use((req, res, next) => {      
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -36,10 +36,4 @@ app.use((req, res, next) => {       //permet l'acces a tout utilisateur autorise
   app.use('/api/sauces',saucesRoutes);
   app.use('/api/auth',authRoutes);
 
- 
-
- 
-  
-
-
-  module.exports = app      //exportation de app (pour server.js)
+  module.exports = app;      //exportation de app (pour server.js)
