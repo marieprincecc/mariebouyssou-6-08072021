@@ -2,6 +2,7 @@
 
 #Piquante#
 
+cloner le depot.
 Dans le repertoire "backend" lancé la commande `npm install`.
 Démarrer nodemon pour lancer le serveur (`localhost` port `3000` par defaut). Rechargera automatiquement en cas de modification.
 
