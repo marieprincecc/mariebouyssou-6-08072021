@@ -83,7 +83,7 @@ exports.LikeDislike = (req, res, next) => {
           alert("déja liké!")
         }else{
           sauce.updateOne({ _id: req.params.id },{'$push':{'usersLiked':userId},'$inc':{'likes':1}})
-            .then(() => res.status(201).json({ message: 'like!'}))
+            .then(() => res.status(200).json({ message: 'like!'}))
             .catch(error => res.status(400).json({ error }));            
         }                                                         // +1 a likes
       }
@@ -91,12 +91,12 @@ exports.LikeDislike = (req, res, next) => {
       if (req.body.like == 0){
         if(UsersLiked.find(element=> element === userId)){
           sauce.updateOne({ _id: req.params.id },{'$pull':{'usersLiked':userId},'$inc':{'likes':-1}})
-              .then(() => res.status(201).json({message:'sauce 0'}))
+              .then(() => res.status(200).json({message:'sauce 0'}))
               .catch(error => res.status(400).json({ error }));
         }else{
           if( UsersDisliked.find(element=> element === userId)){           //si userId dans usersDisliked
             sauce.updateOne({ _id: req.params.id },{'$pull':{'usersDisliked':userId},'$inc':{'dislikes':-1}})
-              .then(() => res.status(201).json({message:'sauce 0'}))
+              .then(() => res.status(200).json({message:'sauce 0'}))
               .catch(error => res.status(400).json({ error }));
           }
         }
@@ -108,7 +108,7 @@ exports.LikeDislike = (req, res, next) => {
           alert("déja disliké!")
           }else{
             sauce.updateOne({ _id: req.params.id },{'$push':{'usersDisliked':userId},'$inc':{'dislikes':1}})
-              .then(() => res.status(201).json({ message: 'dislike!'}))
+              .then(() => res.status(200).json({ message: 'dislike!'}))
               .catch(error => res.status(400).json({ error }));                                                   //+1 a dislikes
           }
       }

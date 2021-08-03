@@ -28,9 +28,7 @@ app.use((req, res, next) => {
 
   app.use(bodyParser.json());     //converti toute les reponse en format utilisable (json)
   app.use(helmet());            //inclu directement helmet a l'app
-  app.use(helmet.xssFilter());   //inclu l’en-tête X-XSS-Protection
-  app.use(helmet.noSniff());    // empêche le navigateur de deviner le type du fichier (empeche par exemple attaque GIFAR)
-  app.use(helmet.frameguard({ action: 'deny' })); //interdit l'ouverture d'une page légitime à l’intérieur d’une iframe
+ 
 
   app.use('/images', express.static(path.join(__dirname, 'images')));   //indique a express d'utiliser les ressources image en static
   app.use('/api/sauces',saucesRoutes);
